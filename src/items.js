@@ -7,7 +7,13 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  return res.send(`You just requested item that should be with id ${req.params.id}`) 
+  const itemId = parseInt(req.params.id, 10);
+  const item = items.find(i => i.id === itemId);
+  if (item) {
+    return res.json(item);
+  } else {
+    return res.status(404).json({ error: 'Item not found' });
+  }
 })
 
 router.post('/', (req, res) => {
